@@ -154,19 +154,18 @@ export default function App() {
   };
 
   const menuItems = [
-    { id: 'home', label: '종합 대시보드', icon: <Home className="w-4 h-4" /> },
-    { id: 'notices', label: '공지 및 의사수렴', icon: <Megaphone className="w-4 h-4" /> },
-    { id: 'seongmucheop', label: '성모찹 (구글 시트)', icon: <BookOpen className="w-4 h-4 text-emerald-500" /> },
-    { id: 'chat', label: '온라인 교무실 (소통)', icon: <MessageSquare className="w-4 h-4" /> },
-    { id: 'files', label: '학교 행정 자료실', icon: <FolderOpen className="w-4 h-4 text-sky-500 fill-sky-50/10" /> },
-    { id: 'calendar', label: '공유 학사일정', icon: <Calendar className="w-4 h-4 text-emerald-500" /> },
-    { id: 'surveys', label: '의견 수렴 설문조사', icon: <FileSpreadsheet className="w-4 h-4 text-indigo-500" /> },
-    { id: 'contacts', label: '교직원 조직원 주소록', icon: <Users className="w-4 h-4" /> },
+    { id: 'home', label: '종합 대시보드', icon: <Home className="w-4.5 h-4.5" /> },
+    { id: 'notices', label: '공지 게시판', icon: <Megaphone className="w-4.5 h-4.5" /> },
+    { id: 'seongmucheop', label: '성모찹 (구글 시트)', icon: <BookOpen className="w-4.5 h-4.5 text-emerald-500" /> },
+    { id: 'chat', label: '온라인 교무실 (소통)', icon: <MessageSquare className="w-4.5 h-4.5" /> },
+    { id: 'files', label: '양식 자료실', icon: <FolderOpen className="w-4.5 h-4.5 text-sky-500 fill-sky-50/10" /> },
+    { id: 'surveys', label: '의견 수렴 설문조사', icon: <FileSpreadsheet className="w-4.5 h-4.5 text-indigo-500" /> },
+    { id: 'contacts', label: '교직원 현황', icon: <Users className="w-4.5 h-4.5" /> },
   ];
 
   // Admin tab is conditional
   if (currentUser && currentUser.role === 'admin') {
-    menuItems.push({ id: 'admin', label: '시스템 관리실 (통제)', icon: <ShieldCheck className="w-4 h-4 text-rose-500" /> });
+    menuItems.push({ id: 'admin', label: '시스템 관리실 (통제)', icon: <ShieldCheck className="w-4.5 h-4.5 text-rose-500" /> });
   }
 
   // Handle global search triggering
@@ -201,25 +200,22 @@ export default function App() {
           <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-blue-400/10 blur-[120px] pointer-events-none"></div>
           <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-emerald-400/10 blur-[120px] pointer-events-none"></div>
 
-          <div className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-md w-full max-w-lg p-7 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-800 text-center space-y-5 relative z-10 transition-all max-h-[95vh] overflow-y-auto">
+          <div className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-md w-full max-w-md p-7 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-800 text-center space-y-5 relative z-10 transition-all max-h-[95vh] overflow-y-auto">
             <div className="space-y-2 block">
               <span className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full text-[10px] font-extrabold tracking-wider uppercase mx-auto">
                 <Sparkles className="w-3.5 h-3.5 animate-pulse" /> SMART TEACHERS COLLABORATION
               </span>
               <h1 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight leading-relaxed">대전성모여고 온라인 교무실</h1>
-              <p className="text-xs text-slate-400 dark:text-slate-500 leading-normal font-semibold">교장 송미령, 교감 이정호 외 49명의 교직원 공동 협업 시스템</p>
             </div>
 
             {/* DIRECT LOGIN FORM */}
             <form onSubmit={handleDirectLogin} className="space-y-4 text-left p-4.5 bg-slate-50/70 dark:bg-slate-950/40 rounded-2xl border border-slate-100 dark:border-slate-800/80">
-              <span className="text-[11px] font-extrabold text-blue-600 dark:text-blue-400 uppercase tracking-wider block mb-1">인증수단 1: 이름 및 비밀번호 로그인</span>
-              
               <div className="space-y-1 relative">
                 <label className="text-[10px] font-black text-slate-500 dark:text-slate-400">교직원 성명</label>
                 <div className="relative">
                   <input 
                     type="text" 
-                    placeholder="성명을 입력하거나 목록 수단으로 선택 (예시: 송미령)"
+                    placeholder="성명을 입력하세요"
                     value={loginName}
                     onChange={(e) => {
                       setLoginName(e.target.value);
@@ -275,7 +271,7 @@ export default function App() {
                 <label className="text-[10px] font-black text-slate-500 dark:text-slate-400">로그인 비밀번호</label>
                 <input 
                   type="password" 
-                  placeholder="비밀번호(1234)를 입력하십시오"
+                  placeholder="비밀번호를 입력하세요"
                   value={loginPassword}
                   onChange={(e) => {
                     setLoginPassword(e.target.value);
@@ -295,40 +291,11 @@ export default function App() {
                 type="submit"
                 className="w-full py-3 bg-blue-600 hover:bg-blue-500 active:scale-98 cursor-pointer rounded-xl font-bold text-xs text-white tracking-wide shadow-md hover:shadow-lg transition-all"
               >
-                본 성명으로 교무실 입장
+                교무실 입장
               </button>
             </form>
 
-            {/* Quick login select shortcuts */}
-            <div className="pt-2 border-t border-slate-100 dark:border-slate-800/60 text-left space-y-2">
-              <span className="text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-wider block">원클릭 직무 가상 키 (대표 교사 간편 로그인)</span>
-              
-              <div className="grid grid-cols-3 gap-2">
-                {[
-                  { name: '송미령', label: '교장실', role: '교장 (관리자)' },
-                  { name: '이정호', label: '교감실', role: '교감 (부관리자)' },
-                  { name: '서민호', label: '연구개발부', role: '교사 (부장)' }
-                ].map(item => {
-                  return (
-                    <div 
-                      key={item.name}
-                      onClick={() => {
-                        const target = allUsersList.find(u => u.name === item.name);
-                        if (target) {
-                          setLoginName(item.name);
-                          setLoginPassword('1234');
-                          handleDemoLogin(target);
-                        }
-                      }}
-                      className="p-3 text-center bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-xl cursor-pointer hover:border-blue-500 dark:hover:border-blue-400 hover:bg-blue-50/10 dark:hover:bg-slate-800/40 transition-all shadow-2xs group"
-                    >
-                      <div className="text-[11px] font-black text-slate-800 dark:text-slate-100 group-hover:text-blue-600">{item.name}</div>
-                      <div className="text-[9px] text-slate-400 dark:text-slate-500 font-bold">{item.role}</div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+
 
             {/* Google Identity Providers Mock Button */}
             <div className="space-y-2">
@@ -358,12 +325,12 @@ export default function App() {
               {/* Header Title branding */}
               <div className="p-5 border-b border-slate-50 dark:border-slate-800 flex items-center justify-between">
                 <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center shrink-0 shadow-sm text-white font-black text-xs">
+                  <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center shrink-0 shadow-sm text-white font-black text-sm">
                     온
                   </div>
-                  <div className="space-y-0.5 truncate leading-none">
-                    <h1 className="text-xs font-extrabold text-slate-800 dark:text-white tracking-tight">온라인 교무실</h1>
-                    <span className="text-[8.5px] text-slate-400 font-mono tracking-widest uppercase font-bold">Teachers' Office</span>
+                  <div className="space-y-1 truncate leading-none">
+                    <h1 className="text-base font-extrabold text-slate-800 dark:text-white tracking-tight">온라인 교무실</h1>
+                    <span className="text-[10px] text-slate-400 font-mono tracking-widest uppercase font-bold">Teachers' Office</span>
                   </div>
                 </div>
 
@@ -386,14 +353,14 @@ export default function App() {
               </div>
 
               {/* Navigation Items menu list */}
-              <nav className="p-3 space-y-1 overflow-y-auto max-h-[70vh]">
+              <nav className="p-3 space-y-1.5 overflow-y-auto max-h-[70vh]">
                 {menuItems.map(item => {
                   const isActive = activeTab === item.id;
                   return (
                     <button 
                       key={item.id}
                       onClick={() => handleDeepNavigate(item.id)}
-                      className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold text-left transition-all relative ${isActive ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/60'}`}
+                      className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-bold text-left transition-all relative ${isActive ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/60'}`}
                     >
                       {item.icon}
                       {isSidebarOpen && <span className="truncate">{item.label}</span>}
@@ -462,24 +429,9 @@ export default function App() {
                 >
                   <Menu className="w-5 h-5" />
                 </button>
-                
-                <div className="hidden sm:flex items-center gap-1 text-[10px] font-bold text-slate-400 bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800 px-3 py-1 rounded-full">
-                  <Clock className="w-3.5 h-3.5 text-blue-500 shrink-0" />
-                  <span className="font-mono">현재 교단 시각: 2026-06-03 14:42 (수요일)</span>
-                </div>
               </div>
 
-              {/* Global contacts and Notice search engine */}
-              <form onSubmit={handleGlobalSearchSubmit} className="relative w-64 max-w-xs block">
-                <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5" />
-                <input 
-                  type="text" 
-                  placeholder="통합 교직원/업무 내선 검색..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-100 dark:bg-slate-800/40 dark:border-slate-800 hover:bg-slate-100/50 outline-none text-xs rounded-xl pl-8 pr-3 py-1.5 text-slate-700 dark:text-slate-200"
-                />
-              </form>
+              {/* Global contacts and Notice search engine removed */}
             </header>
 
             {/* DYNAMIC SCROLLER VIEWS ROUTER */}
@@ -498,9 +450,6 @@ export default function App() {
               )}
               {activeTab === 'files' && (
                 <FilesArchiver currentUser={currentUser} />
-              )}
-              {activeTab === 'calendar' && (
-                <CalendarModule currentUser={currentUser} />
               )}
               {activeTab === 'surveys' && (
                 <SurveyModule currentUser={currentUser} />

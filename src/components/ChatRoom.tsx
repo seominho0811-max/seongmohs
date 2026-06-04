@@ -47,6 +47,7 @@ export const ChatRoom: React.FC<ChatRoomProps> = ({ currentUser, onNavigate }) =
   const [newRoomName, setNewRoomName] = useState('');
   const [newRoomType, setNewRoomType] = useState<'all' | 'dept' | 'grade' | 'project' | 'direct'>('all');
   const [selectedMembers, setSelectedMembers] = useState<string[]>([currentUser.id]);
+  const [roomToDelete, setRoomToDelete] = useState<RoomType | null>(null);
 
   const chatEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -88,23 +89,28 @@ export const ChatRoom: React.FC<ChatRoomProps> = ({ currentUser, onNavigate }) =
   };
 
   const handleDeleteRoom = (roomId: string) => {
-    const roomToDelete = rooms.find(r => r.id === roomId);
-    if (!roomToDelete) return;
-    
-    if (confirm(`"${roomToDelete.name}" 대화방을 완전히 삭제하실 것입니까? 대화 내용 및 첨부파일 내역이 전체 삭제됩니다.`)) {
-      SchoolStorage.deleteChannel(roomId);
-      
-      const rawRooms = SchoolStorage.getChannels();
-      setRooms(rawRooms);
-      
-      if (rawRooms.length > 0) {
-        handleSelectRoom(rawRooms[0]);
-      } else {
-        setActiveRoom(null);
-        setMessages([]);
-        setPinnedNotice(null);
-      }
+    const targetRoom = rooms.find(r => r.id === roomId);
+    if (targetRoom) {
+      setRoomToDelete(targetRoom);
     }
+  };
+
+  const confirmDeleteRoom = () => {
+    if (!roomToDelete) return;
+    const roomId = roomToDelete.id;
+    SchoolStorage.deleteChannel(roomId);
+    
+    const rawRooms = SchoolStorage.getChannels();
+    setRooms(rawRooms);
+    
+    if (rawRooms.length > 0) {
+      handleSelectRoom(rawRooms[0]);
+    } else {
+      setActiveRoom(null);
+      setMessages([]);
+      setPinnedNotice(null);
+    }
+    setRoomToDelete(null);
   };
 
   useEffect(() => {
@@ -688,7 +694,7 @@ export const ChatRoom: React.FC<ChatRoomProps> = ({ currentUser, onNavigate }) =
                           </div>
                           <div>
                             <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">
-                              {user.name} {isMe && <span className="text-blue-500 text-[10px] font-bold">(나)</span>}
+                               {user.name} {isMe && <span className="text-blue-500 text-[10px] font-bold">(나)</span>}
                             </span>
                             <span className="text-[10px] text-slate-400 dark:text-slate-500 ml-1.5">
                               {user.department} • {user.task}
@@ -725,6 +731,43 @@ export const ChatRoom: React.FC<ChatRoomProps> = ({ currentUser, onNavigate }) =
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* DELETE ROOM CONFIRMATION MODAL */}
+      {roomToDelete && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl max-w-sm w-full border border-slate-100 dark:border-slate-800 shadow-2xl p-6 space-y-4">
+            <div className="flex items-center gap-3 text-rose-600">
+              <span className="p-2 bg-rose-50 dark:bg-rose-950/50 rounded-lg">
+                <Trash2 className="w-5 h-5" />
+              </span>
+              <h3 className="text-sm font-bold dark:text-white">대화방 삭제</h3>
+            </div>
+            
+            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
+              <span className="font-extrabold text-slate-800 dark:text-white">"{roomToDelete.name}"</span> 대화방을 완전히 삭제하시겠습니까? 
+              <br />
+              이 방의 대화 내용 및 공유되었던 첨부파일 내역이 전체 삭제되며, 복구할 수 없습니다.
+            </p>
+
+            <div className="flex justify-end gap-2 pt-2">
+              <button 
+                type="button"
+                onClick={() => setRoomToDelete(null)}
+                className="px-3.5 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-750 text-slate-600 dark:text-slate-300 text-xs font-bold rounded-xl transition-all cursor-pointer"
+              >
+                취소
+              </button>
+              <button 
+                type="button"
+                onClick={confirmDeleteRoom}
+                className="px-3 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-xl transition-all shadow-md cursor-pointer"
+              >
+                삭제하기
+              </button>
+            </div>
           </div>
         </div>
       )}

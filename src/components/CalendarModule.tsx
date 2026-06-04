@@ -215,38 +215,7 @@ export const CalendarModule: React.FC<CalendarModuleProps> = ({ currentUser }) =
           
           {/* Header Controls */}
           <div className="flex items-center justify-between pb-2 border-b border-slate-50">
-            {/* Legend checklist */}
-            <div className="flex items-center gap-3 text-[10px] font-bold text-slate-500">
-              <label className="flex items-center gap-1.5 cursor-pointer">
-                <input 
-                  type="checkbox" 
-                  checked={filterSchool} 
-                  onChange={(e) => setFilterSchool(e.target.checked)}
-                  className="rounded text-red-500 bg-red-100"
-                />
-                <span className="w-2.5 h-2.5 bg-[#ef4444] rounded-full"></span> 학교 행사
-              </label>
 
-              <label className="flex items-center gap-1.5 cursor-pointer">
-                <input 
-                  type="checkbox" 
-                  checked={filterDept} 
-                  onChange={(e) => setFilterDept(e.target.checked)}
-                  className="rounded text-blue-500"
-                />
-                <span className="w-2.5 h-2.5 bg-[#3b82f6] rounded-full"></span> 부서 일정
-              </label>
-
-              <label className="flex items-center gap-1.5 cursor-pointer">
-                <input 
-                  type="checkbox" 
-                  checked={filterPersonal} 
-                  onChange={(e) => setFilterPersonal(e.target.checked)}
-                  className="rounded text-green-500"
-                />
-                <span className="w-2.5 h-2.5 bg-[#10b981] rounded-full"></span> 개인 일정
-              </label>
-            </div>
 
             {/* Date Swapping buttons */}
             <div className="flex items-center gap-3">
@@ -475,34 +444,7 @@ export const CalendarModule: React.FC<CalendarModuleProps> = ({ currentUser }) =
                 </div>
               </div>
 
-              <div className="space-y-1">
-                <label className="text-[11px] font-bold text-slate-400 flex items-center justify-between">
-                  <span>목적 분류</span>
-                </label>
-                <div className="grid grid-cols-3 gap-2">
-                  <button 
-                    type="button"
-                    onClick={() => { setCategory('school'); setEventColor('#ef4444'); }}
-                    className={`py-2 text-[11px] font-bold rounded-xl border text-center transition-colors ${category === 'school' ? 'bg-red-50 text-red-600 border-red-300' : 'bg-slate-50 text-slate-500 hover:bg-slate-100 border-slate-100'}`}
-                  >
-                    학교 공행사
-                  </button>
-                  <button 
-                    type="button"
-                    onClick={() => { setCategory('dept'); setEventColor('#3b82f6'); }}
-                    className={`py-2 text-[11px] font-bold rounded-xl border text-center transition-colors ${category === 'dept' ? 'bg-blue-50 text-blue-600 border-blue-300' : 'bg-slate-50 text-slate-500 hover:bg-slate-100 border-slate-100'}`}
-                  >
-                    부서 행사
-                  </button>
-                  <button 
-                    type="button"
-                    onClick={() => { setCategory('personal'); setEventColor('#10b981'); }}
-                    className={`py-2 text-[11px] font-bold rounded-xl border text-center transition-colors ${category === 'personal' ? 'bg-emerald-50 text-emerald-600 border-emerald-300' : 'bg-slate-50 text-slate-500 hover:bg-slate-100 border-slate-100'}`}
-                  >
-                    개인 일정
-                  </button>
-                </div>
-              </div>
+
 
               <div className="space-y-1">
                 <label className="text-[11px] font-bold text-slate-400">일정 세부 계획정보</label>

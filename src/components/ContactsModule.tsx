@@ -218,66 +218,66 @@ export const ContactsModule: React.FC<ContactsModuleProps> = ({ currentUser, onN
       <div className="flex gap-4 items-start flex-col lg:flex-row">
         
         {/* Contacts Cards collection listing */}
-        <div className="flex-1 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 w-full">
+        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2.5 w-full">
           {filteredStaff.map(teacher => {
             const isMe = teacher.id === currentUser.id;
             return (
               <div 
                 key={teacher.id} 
                 onClick={() => setHoveredTeacher(teacher)}
-                className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm transition-all hover:border-blue-200 hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between h-44 group relative overflow-hidden"
+                className="bg-white p-3.5 rounded-2xl border border-slate-100 shadow-sm transition-all hover:border-blue-200 hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between h-44 group relative overflow-hidden"
               >
                 {/* Visual decoration overlay */}
                 <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-blue-50/20 to-transparent rounded-full pointer-events-none"></div>
 
-                <div className="space-y-3 relative z-10 block text-left">
+                <div className="space-y-3 relative z-10 block text-left font-semibold">
                   <div className="flex justify-between items-start">
-                    <div className="flex items-center gap-2.5">
+                    <div className="flex items-center gap-1.5 min-w-0">
                       {/* Round placeholder ring initials */}
-                      <div className="w-10 h-10 rounded-full bg-blue-50 border border-blue-100 text-blue-700 font-bold flex items-center justify-center relative shrink-0">
+                      <div className="w-8 h-8 rounded-full bg-blue-50 border border-blue-100 text-blue-700 font-bold flex items-center justify-center relative shrink-0 text-xs">
                         {teacher.name.charAt(0)}
-                        <span className={`w-2.5 h-2.5 rounded-full border border-white absolute bottom-0.5 right-0.5 ${getOnlineBadgeColor(teacher.status)}`} title={getOnlineText(teacher.status)}></span>
+                        <span className={`w-2 h-2 rounded-full border border-white absolute bottom-0 right-0 ${getOnlineBadgeColor(teacher.status)}`} title={getOnlineText(teacher.status)}></span>
                       </div>
                       
                       <div className="space-y-0.5 min-w-0">
-                        <div className="flex items-center gap-1.5">
-                          <h3 className="text-xs font-extrabold text-slate-800 truncate">{teacher.name}</h3>
+                        <div className="flex items-center gap-1">
+                          <h3 className="text-[11px] font-extrabold text-slate-800 truncate">{teacher.name}</h3>
                           {isMe && (
-                            <span className="px-1 py-0.2 bg-slate-100 border border-slate-200 text-slate-500 text-[8px] font-bold rounded">나</span>
+                            <span className="px-0.5 py-0.2 bg-slate-100 border border-slate-200 text-slate-500 text-[7px] font-bold rounded shrink-0">나</span>
                           )}
                         </div>
-                        <p className="text-[10px] text-slate-400 font-mono flex items-center gap-1">
-                          <Building className="w-3.5 h-3.5 text-slate-300 shrink-0" />
+                        <p className="text-[9px] text-slate-400 font-mono flex items-center gap-0.5">
+                          <Building className="w-3 h-3 text-slate-300 shrink-0" />
                           <span className="truncate">{teacher.department}</span>
                         </p>
                       </div>
                     </div>
 
-                    <span className="text-[9.5px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full uppercase shrink-0 font-bold font-mono">
+                    <span className="text-[8.5px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded uppercase shrink-0 font-bold font-mono">
                       #{teacher.extension}
                     </span>
                   </div>
 
-                  <p className="text-[11px] text-slate-600 line-clamp-2 leading-relaxed flex items-start gap-1.5 min-h-[32px] font-semibold">
-                    <Briefcase className="w-4 h-4 text-slate-300 shrink-0 mt-0.5" />
+                  <p className="text-[10px] text-slate-600 line-clamp-2 leading-relaxed flex items-start gap-1 min-h-[30px] font-semibold">
+                    <Briefcase className="w-3.5 h-3.5 text-slate-300 shrink-0 mt-0.5" />
                     <span>업무: {teacher.task}</span>
                   </p>
                 </div>
 
                 {/* Direct interaction footer */}
-                <div className="flex justify-between items-center pt-3 border-t border-slate-50 relative z-10 shrink-0">
-                  <span className="text-[10.5px] text-slate-400 truncate flex items-center gap-1 font-mono max-w-[140px]" title={teacher.email}>
-                    <Mail className="w-3.5 h-3.5 text-slate-300 shrink-0" />
+                <div className="flex justify-between items-center pt-2.5 border-t border-slate-50 relative z-10 shrink-0">
+                  <span className="text-[9.5px] text-slate-400 truncate flex items-center gap-1 font-mono max-w-[100px]" title={teacher.email}>
+                    <Mail className="w-3 h-3 text-slate-300 shrink-0" />
                     {teacher.email}
                   </span>
 
                   {!isMe && (
                     <button 
                       onClick={(e) => { e.stopPropagation(); handleOpenDirectChat(teacher); }}
-                      className="opacity-0 group-hover:opacity-100 transition-opacity p-1 bg-blue-50 text-blue-600 border border-blue-100 hover:bg-blue-600 hover:text-white hover:border-blue-600 rounded-lg text-xs font-bold flex items-center gap-1"
+                      className="opacity-0 group-hover:opacity-100 transition-opacity p-0.5 px-1.5 bg-blue-50 text-blue-600 border border-blue-100 hover:bg-blue-600 hover:text-white hover:border-blue-600 rounded text-[10px] font-bold flex items-center gap-0.5"
                       title="1:1 메시지 전송"
                     >
-                      <MessageSquare className="w-3.5 h-3.5 shrink-0" />
+                      <MessageSquare className="w-3 h-3 shrink-0" />
                       <span>대화</span>
                     </button>
                   )}
