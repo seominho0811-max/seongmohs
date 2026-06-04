@@ -1,0 +1,202 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User profile with department, role and school specific metadata",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Firebase UID of the teacher" },
+        "name": { "type": "string", "description": "Real name of the teacher" },
+        "email": { "type": "string", "description": "School email of the teacher" },
+        "department": { "type": "string", "description": "Affiliated school department (e.g., 교무부, 연구부)" },
+        "role": { "type": "string", "enum": ["admin", "dept_manager", "teacher"], "description": "System access level permission" },
+        "task": { "type": "string", "description": "Assigned job or duty in school" },
+        "extension": { "type": "string", "description": "School internal phone extension" },
+        "approved": { "type": "boolean", "description": "Approval status by school admin" },
+        "status": { "type": "string", "enum": ["online", "offline", "busy"], "description": "Current active status" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" }
+      },
+      "required": ["id", "name", "email", "department", "role", "approved"]
+    },
+    "ChatRoom": {
+      "title": "Chat Room",
+      "description": "A collaborative channel or private DM chatroom",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique room ID" },
+        "name": { "type": "string", "description": "Room display name" },
+        "type": { "type": "string", "enum": ["all", "dept", "grade", "project", "direct"], "description": "Room classification" },
+        "members": { "type": "array", "description": "List of user IDs participating" },
+        "pinnedMessages": { "type": "array", "description": "List of pinned message IDs" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "name", "type", "members"]
+    },
+    "ChatMessage": {
+      "title": "Chat Message",
+      "description": "A message item sent with optional file/image attachments and read lists",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "roomId": { "type": "string" },
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "senderAvatar": { "type": "string" },
+        "text": { "type": "string" },
+        "attachments": { "type": "array" },
+        "readBy": { "type": "array" },
+        "isNotice": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "roomId", "senderId", "senderName", "text", "createdAt"]
+    },
+    "Notice": {
+      "title": "School Notice",
+      "description": "Official notice published with rich details and view logs",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "category": { "type": "string", "enum": ["교무", "연구", "생활교육", "행사", "연수", "일반"] },
+        "authorId": { "type": "string" },
+        "authorName": { "type": "string" },
+        "isPinned": { "type": "boolean" },
+        "attachments": { "type": "array" },
+        "views": { "type": "integer" },
+        "viewedBy": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "title", "content", "category", "authorId", "authorName", "createdAt"]
+    },
+    "Comment": {
+      "title": "Notice Comment",
+      "description": "Collaborative text comments on official notices",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "authorId": { "type": "string" },
+        "authorName": { "type": "string" },
+        "content": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "authorId", "authorName", "content", "createdAt"]
+    },
+    "FileRecord": {
+      "title": "School File Record",
+      "description": "Metadata tracking files and virtual folders in school archive",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "type": { "type": "string", "enum": ["folder", "file"] },
+        "parentFolderId": { "type": "string" },
+        "fileType": { "type": "string" },
+        "size": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "ownerName": { "type": "string" },
+        "version": { "type": "integer" },
+        "downloadCount": { "type": "integer" },
+        "isStarred": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "name", "type", "ownerId", "ownerName", "createdAt"]
+    },
+    "CalendarEvent": {
+      "title": "Calendar Event",
+      "description": "Schedules color-coded for school, departments, and teachers",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "startDate": { "type": "string" },
+        "endDate": { "type": "string" },
+        "category": { "type": "string", "enum": ["school", "dept", "personal"] },
+        "department": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "ownerName": { "type": "string" },
+        "color": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "title", "startDate", "endDate", "category", "ownerId", "createdAt"]
+    },
+    "Survey": {
+      "title": "Teacher Opinion Survey",
+      "description": "Opinion survey with forms and teacher logs",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "authorId": { "type": "string" },
+        "authorName": { "type": "string" },
+        "isClosed": { "type": "boolean" },
+        "isAnonymous": { "type": "boolean" },
+        "questions": { "type": "array" },
+        "responses": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "title", "authorId", "authorName", "questions", "responses", "createdAt"]
+    },
+    "MeetingRoom": {
+      "title": "Meeting Record",
+      "description": "Records and minutes of academic affairs and grade boards",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "type": { "type": "string", "enum": ["staff", "heads", "grade", "learning"] },
+        "date": { "type": "string" },
+        "time": { "type": "string" },
+        "agenda": { "type": "string" },
+        "attachments": { "type": "array" },
+        "minutes": { "type": "string" },
+        "attendance": { "type": "object" },
+        "recorderId": { "type": "string" },
+        "recorderName": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "title", "type", "date", "time", "recorderId", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Teacher profiles and roles"
+    },
+    "/chatRooms/{roomId}": {
+      "schema": "ChatRoom",
+      "description": "Collaboration chat rooms"
+    },
+    "/chatRooms/{roomId}/messages/{messageId}": {
+      "schema": "ChatMessage",
+      "description": "Messages sent in chat rooms"
+    },
+    "/notices/{noticeId}": {
+      "schema": "Notice",
+      "description": "School notices"
+    },
+    "/notices/{noticeId}/comments/{commentId}": {
+      "schema": "Comment",
+      "description": "Comments left on notices"
+    },
+    "/files/{fileId}": {
+      "schema": "FileRecord",
+      "description": "Integrated file metadata"
+    },
+    "/calendarEvents/{eventId}": {
+      "schema": "CalendarEvent",
+      "description": "Shared calendar schedules"
+    },
+    "/surveys/{surveyId}": {
+      "schema": "Survey",
+      "description": "Staff feedback and surveys"
+    },
+    "/meetingRooms/{meetingId}": {
+      "schema": "MeetingRoom",
+      "description": "Staff and committee meetings"
+    }
+  }
+}

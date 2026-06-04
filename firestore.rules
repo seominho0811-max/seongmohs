@@ -1,0 +1,68 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Check if the user is authenticated
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // Check if user is accessing their own data
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // User Collection Rules
+    match /users/{userId} {
+      allow read: if isSignedIn();
+      allow create, update: if isOwner(userId);
+      allow delete: if false;
+    }
+
+    // Chat Rooms Collection
+    match /chatRooms/{roomId} {
+      allow read, write: if isSignedIn();
+      
+      // Messages Subcollection
+      match /messages/{messageId} {
+        allow read, write: if isSignedIn();
+      }
+    }
+
+    // Notices Collection
+    match /notices/{noticeId} {
+      allow read: if isSignedIn();
+      allow create, update, delete: if isSignedIn();
+      
+      // Comments Subcollection
+      match /comments/{commentId} {
+        allow read, write: if isSignedIn();
+      }
+    }
+
+    // Files Archived (자료실)
+    match /files/{fileId} {
+      allow read, write: if isSignedIn();
+    }
+
+    // Calendar Events
+    match /calendarEvents/{eventId} {
+      allow read, write: if isSignedIn();
+    }
+
+    // Survey Questionnaires
+    match /surveys/{surveyId} {
+      allow read, write: if isSignedIn();
+    }
+
+    // Meeting Rooms
+    match /meetingRooms/{meetingId} {
+      allow read, write: if isSignedIn();
+    }
+  }
+}
